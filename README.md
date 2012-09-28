@@ -20,9 +20,6 @@ right to left versions of most functions are provided.
         function(v) { return v + this.x ;});
     m(1); -> 3
     
-    assert.equal(g(0), 3);
-    assert.deepEqual(state, [0, 1, 2]);
-    
     // Function Iteration
     var n = composed.composeIterate(increment, 10);
     n(1); -> 11
@@ -90,7 +87,7 @@ Composes a function 'f' with itself 'count' times.
     f(1); -> 11
 
 ## wrap(...function(...args): Array) ##
-Wraps a set of functions. Eached wrapped function gives next function's arguments.
+Wraps a set of functions. Each wrapped function gives next function's arguments.
 Wraps right to left. Like composition if Javascript supported multiple return
 values.
 
