@@ -1,5 +1,4 @@
 define(['composed'], function(composed){
-    
     return {
         'module': "Wrap Chain Tests",
         'tests': [
@@ -15,12 +14,14 @@ define(['composed'], function(composed){
             }],
             ["Multiple wrap chain",
             function(){
-                var state = [];
-                function a(v){ this[v] = v; return [v + 1];};
-                var g = composed.wrapChain(state, a, a, a);
+                function a(v){ return [v + this.x];};
+                function b(v){ return [v * this.y];};
                 
-                assert.equal(g(0), 3);
-                assert.deepEqual(state, [0, 1, 2]);
+                var f = composed.wrapChain({x:1, y:2}, a, b, a);
+                assert.equal(f(0), 3);
+                
+                var g = composed.wrapChain({x:1, y:2}, b, b, a);
+                assert.equal(g(0), 4);
             }],
             ["Wrap none",
             function(){
