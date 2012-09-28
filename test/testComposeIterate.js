@@ -45,22 +45,21 @@ define(['composed'], function(composed){
             ["Nested ComposeIterate",
             function(){
                 var oneM = composed.composeIterate(composed.composeIterate(inc, 2), 3);
-
+                
                 assert.equal(oneM(1), 7);
             }],
             ["ComposeIterate One",
             function(){
                 var composeped = composed.composeIterate(inc, 1);
-
+                
                 assert.equal(composeped(1), 2);
             }],
             ["ComposeIterate Zero",
             function(){
                 var composeped = composed.composeIterate(inc, 0);
-
+                
                 assert.equal(composeped(1), undefined);
             }],
-
         ],
     };
 });

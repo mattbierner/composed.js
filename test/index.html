@@ -19,12 +19,12 @@
         });
         require(
             ['composed', 'testWrap', 'testCompose', 'testWrapChain',
-                'testComposeChain', 'testComposeIterate'],
+                'testComposeChain', 'testComposeIterate', 'testWrapIterate'],
             function(composed, testWrap, testCompose, testWrapChain,
-                testComposeChain, testComposeIterate)
+                testComposeChain, testComposeIterate, testWrapIterate)
             {
                 [testWrap, testCompose, testWrapChain, testComposeChain,
-                    testComposeIterate].forEach(function(m){
+                    testComposeIterate, testWrapIterate].forEach(function(m){
                     m.module && module(m.module);
                     m.tests.forEach(function(e){ test.apply(this, e); });
             });
