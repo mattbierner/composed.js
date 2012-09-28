@@ -74,14 +74,14 @@ Composes a set of functions right to left.
     f(1); -> 6 
 
 ## composel(...function(...args): Array) ##
-Same as compose but left to right.
+Same as 'compose' but left to right.
 
     composel(a, b, c)(x, y); -> c(b(a(x, y)))
     
     var f = composed.composel(double, increment, increment);
     f(1); -> 4
 
-## composeIterate(f: function, count: number) ##
+## composeIterate(f: function(...), count: number) ##
 Composes a function 'f' with itself 'count' times.
 
     composeIterate(f, 3)(x, y); -> f(f(f(x, y)))
@@ -90,23 +90,77 @@ Composes a function 'f' with itself 'count' times.
     f(1); -> 11
 
 ## wrap(...function(...args): Array) ##
-Wraps a function in a set of functions that give the function's arguments.
-Like composition if Javascript supported multiple return values.
+Wraps a set of functions. Eached wrapped function gives next function's arguments.
+Wraps right to left. Like composition if Javascript supported multiple return
+values.
+
+    wrap(a, b, c)(x, y); -> a.apply(undefined, b.apply(undefined, c(x, y)))
 
     // Return calling arguments as array.
     function args(){
         return Array.prototype.map.call(arguments, function(e) { return e; });
     }
     
-    // Increment calling arguments and return array.
-    function inc(){
-        return Array.prototype.map.call(arguments, function(e) { return e + 1; });
-    }
+    var f = composed.wrap(args, increment, double);
+    f(1, 2, 3) -> [3, 5, 7]
+
+## wrapl(...function(...): Array) ##
+Same as 'wrap' but left to right.
+
+    wrapl(a, b, c)(x, y); -> c.apply(undefined, b.apply(undefined, a(x, y)))
     
-    // Multiply calling arguments by two and return array.
-    function mul(){
-        return Array.prototype.map.call(arguments, function(e) { return e * 2; });
-    }
+    var f = composed.wrapl(double, increment, args);
+    f(1, 2, 3) -> [3, 5, 7]
+
+## wrapIterate(f: function(...), count: number) ##
+Wraps a function 'f' with itself 'count' times.
+
+    wrapIterate(f, 3)(x, y); -> f.apply(undefined, f.apply(undefined, f(x, y)))
     
-    var wrapped = callable.wrap(args, inc, mul);
-    wrapped(1, 2, 3) -> [3, 5, 7]
+    var f = composed.composeIterate(function(v){ return [v + 1]; }, 10);
+    f(1); -> [11]
+
+## composeChain(state: object, ...function(...)) ##
+Composes a chain of functions using an explicit state object when invoking each
+function. Composes right to left. 'state' is set to 'this' when invoking
+composed functions.
+
+    composeChain(state, a, b, c)(x, y) =
+        a.apply(state, [b.apply(state, [c.apply(state, [x, y])])])
+
+## composeChainl(state: object, ...function(...)) ##
+Same as 'composeChain' but left to right.
+
+## composeChainExplicit(state: object, ...function(...)) ##
+Same as 'composeChain' but each function takes a state first argument and 'this'
+is not modified. 
+
+    composeChainExplicit(state, a, b, c)(x, y) =
+        a.apply(undefined, [state, b.apply(undefined, [state, c.apply(undefined, [state, x, y])])])
+        
+## composeChainExplicitl(state: object, ...function(...)) ##
+Same as 'composeChainExplicit' but left to right.
+
+
+## wrapChain(state: object, ...function(...)) ##
+Wraps a chain of functions using an explicit state object when invoking each
+function. Wraps right to left. 'state' is set to 'this' when invoking
+wrapped functions.
+
+    wrapChain(state, a, b, c)(x, y) =
+        a.apply(state, b.apply(state, c.apply(state, [x, y])))
+
+## wrapChainl(state: object, ...function(...)) ##
+Same as 'wrapChain' but left to right.
+
+## wrapChainExplicit(state: object, ...function(...)) ##
+Same as 'wrapChain' but each function takes a state first argument and 'this'
+is not modified. 
+
+    composeChainExplicit(state, a, b, c)(x, y) =
+        a.apply(undefined, [state] + b.apply(undefined, [state] + c.apply(undefined, [state, x, y])))
+        
+## wrapChainExplicitl(state: object, ...function(...)) ##
+Same as 'wrapChainExplicit' but left to right.
+
+
