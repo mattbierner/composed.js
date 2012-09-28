@@ -1,0 +1,22 @@
+{
+  "name": "composed.js",
+  "version": "0.1.0",
+  "description": "Function Composition Javascript Library",
+  "main": "callable",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattbierner/composed.js.git"
+  },
+  "keywords": [
+    "function"
+    "functional",
+    "compose",
+    "wrap",
+    "composition",
+  ],
+  "author": "Matt Bierner",
+  "license": "MIT"
+}
