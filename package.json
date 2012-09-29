@@ -2,7 +2,7 @@
   "name": "composed.js",
   "version": "0.1.0",
   "description": "Function Composition Javascript Library",
-  "main": "callable",
+  "main": "lib/composed.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,7 @@
     "url": "git://github.com/mattbierner/composed.js.git"
   },
   "keywords": [
+    "util",
     "function"
     "functional",
     "compose",
