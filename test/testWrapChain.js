@@ -9,8 +9,8 @@ define(['composed'], function(composed){
                     this.a = v; return [v];
                 });
                 
-                assert.equal(f(1), 1);
-                assert.equal(state.a, 1);
+                assert.deepEqual(f(1), [1]);
+                assert.deepEqual(state.a, 1);
             }],
             ["Multiple wrap chain",
             function(){
@@ -18,16 +18,16 @@ define(['composed'], function(composed){
                 function b(v){ return [v * this.y];};
                 
                 var f = composed.wrapChain({x:1, y:2}, a, b, a);
-                assert.equal(f(0), 3);
+                assert.deepEqual(f(0), [3]);
                 
                 var g = composed.wrapChain({x:1, y:2}, b, b, a);
-                assert.equal(g(0), 4);
+                assert.deepEqual(g(0), [4]);
             }],
             ["Wrap none",
             function(){
                 var state = [4, 5, 6];
                 var wrapped = composed.wrapChain(state);
-                assert.equal(wrapped(1, 2, 3), undefined);
+                assert.deepEqual(wrapped(1, 2, 3), undefined);
                 assert.deepEqual(state, [4, 5, 6]);
             }],
             
@@ -38,7 +38,7 @@ define(['composed'], function(composed){
                     s.a = v; return [v];
                 });
                 
-                assert.equal(f(1), 1);
+                assert.deepEqual(f(1), [1]);
                 assert.equal(state.a, 1);
             }],
         ],
