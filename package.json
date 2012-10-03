@@ -1,6 +1,6 @@
 {
   "name": "composed.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Function Composition Javascript Library",
   "main": "lib/composed.js",
   "scripts": {
